@@ -1,25 +1,18 @@
 const express = require('express');
-const fetch = require('node-fetch');
 const cors = require('cors');
+const { getAccountInfo } = require('./binanceApi');
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 
-app.get('/api/*', async (req, res) => {
-  const path = req.originalUrl.replace('/api', '');
-  const url = `https://api.binance.com${path}`;
-
+app.get('/account', async (req, res) => {
   try {
-    const response = await fetch(url, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0'
-      }
-    });
-    const data = await response.json();
+    const data = await getAccountInfo();
     res.json(data);
   } catch (err) {
-    res.status(500).json({ error: 'Proxy Error', message: err.message });
+    res.status(500).json({ error: err.message });
   }
 });
 
