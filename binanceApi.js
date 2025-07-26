@@ -1,8 +1,8 @@
 const fetch = require('node-fetch');
 const crypto = require('crypto');
 
-const API_KEY = process.env.BINANCE_API_KEY;
-const SECRET_KEY = process.env.BINANCE_SECRET_KEY;
+const API_KEY = process.env.dMT8VybD1wmQZvQyJJT8zpy9wJ5Qoen0soWSrp8FJYBgI6JVOMcakaWJcJ6LWe1S;
+const SECRET_KEY = process.env.EBm4Q3sUiwTefHzlb2JWUMBeCLmGhknAFfiQDO6VP3grCJW3vVL7hGvSpMD4z9ae;
 
 function sign(queryString, secret) {
   return crypto.createHmac('sha256', secret).update(queryString).digest('hex');
