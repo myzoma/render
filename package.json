@@ -1,5 +1,5 @@
 {
-  "name": "binance-proxy",
+  "name": "binance-proxy-signed",
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
