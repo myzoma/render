@@ -1,8 +1,7 @@
 {
-  "name": "crypto-proxy-server",
+  "name": "coingecko-proxy-server",
   "version": "1.0.0",
   "type": "module",
-  "description": "Proxy server for crypto API using CoinGecko",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
