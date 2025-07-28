@@ -1,35 +1,29 @@
-const express = require('express');
-const cors = require('cors');
-const fetch = require('node-fetch');
-const { getAccountInfo } = require('./binanceApi');
+import express from 'express';
+import cors from 'cors';
+import fetch from 'node-fetch';
 
 const app = express();
-const PORT = process.env.PORT || 3000;
-
 app.use(cors());
 
-// ✅ بروكسي لجلب exchangeInfo من Binance
-app.get('/exchangeInfo', async (req, res) => {
+app.get('/binance/*', async (req, res) => {
+  const endpoint = req.params[0];
+  const query = req.originalUrl.split('?')[1] || '';
+  const url = `https://api1.binance.com/${endpoint}?${query}`;
+
   try {
-    const response = await fetch('https://api.binance.com/api/v3/exchangeInfo');
+    const response = await fetch(url, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0',
+        'Accept': 'application/json'
+      }
+    });
+
     const data = await response.json();
     res.json(data);
   } catch (err) {
-    res.status(500).json({
-      error: 'فشل جلب exchangeInfo',
-      detail: err.message
-    });
+    res.status(500).json({ error: 'fetch failed', details: err.message });
   }
 });
 
-// ✅ مثال سابق لبيانات الحساب
-app.get('/account', async (req, res) => {
-  try {
-    const data = await getAccountInfo();
-    res.json(data);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Proxy running on ${PORT}`));
